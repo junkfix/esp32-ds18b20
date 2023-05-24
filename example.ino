@@ -5,7 +5,7 @@ float currTemp[2] = {0.0, 0.0};
 
 
 void tempTask(void *pvParameters){
-	OneWire32 ds(13);
+	OneWire32 ds(13, 0, 1);// gpio pin, RMT channels for TX, RX, there are 8 (0-7) channels available on ESP32
 	byte addr[2][8] = {
 		{0x28, 0xF4, 0x6, 0x95, 0xF0, 0x1, 0x3C, 0x18},   //first
 		{0x28, 0xde, 0x83, 0x76, 0xe0, 0x1, 0x3c, 0xf3}    //second
@@ -23,8 +23,8 @@ void tempTask(void *pvParameters){
 	}
 
 	for(;;){
-		unsigned long gg = millis();
-		ds.reset(); ds.skip(); ds.write(0x44, 0); // start conversion, 1=with parasite power on at the end
+		ds.reset(); ds.skip();
+		ds.write(0x44, 0); // start conversion, 1=with parasite power on at the end
 		vTaskDelay(750 / portTICK_PERIOD_MS);
 		for(byte i = 0; i < 2; i++){
 			Serial.print(i); Serial.print(" = "); 
