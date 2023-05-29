@@ -12,33 +12,31 @@
 #define OW_DURATION_SAMPLE  (15 - 2)
 #define OW_DURATION_RX_IDLE (OW_DURATION_SLOT + 2)
 
+#define OWR_OK		0
+#define OWR_CRC		1
+#define OWR_BAD_DATA	2
+#define OWR_TIMEOUT	3
+#define OWR_DRIVER	4
+
+
 
 class OneWire32 {
 	private:
-		uint8_t LastDeviceFlag;
-		uint8_t LastDiscrepancy;
-		uint8_t LastFamilyDiscrepancy;
-		unsigned char ROM_NO[8];
-		uint8_t owDefaultPower = 0;
 		gpio_num_t owpin;
-		gpio_num_t owgpio = GPIO_NUM_NC;
 		rmt_channel_t owtx;
 		rmt_channel_t owrx;
 		RingbufHandle_t owbuf;
-		rmt_item32_t readSlot(void);
-		rmt_item32_t writeSlot(uint8_t val);
-		bool begin();
-		void flush(void);
-		bool attach(gpio_num_t gpio_num);
+		uint8_t power_default;
+		uint8_t drvtx = 0;
+		uint8_t drvrx = 0;
+		void flush();
 	public:
-		OneWire32(uint8_t gpio_num, uint8_t tx = 0, uint8_t rx = 1);
+	    OneWire32(uint8_t pin, uint8_t tx = 0, uint8_t rx = 1, uint8_t parasite = 0);
+		~OneWire32();
 		bool reset();
-		void select(const uint8_t *addr);
-		void skip();
-		uint8_t read();
-		bool read_bits(gpio_num_t gpio_num, uint8_t *data, uint8_t num);
-		void write(const uint8_t data, uint8_t power = 0);
-		bool write_bits(gpio_num_t gpio_num, uint8_t data, uint8_t num, uint8_t power);
-		bool search(uint8_t *addr);
-		uint8_t crc8(const uint8_t *addr, int len);
+		void request();
+		uint8_t getTemp(uint64_t &addr, float &temp);
+		uint8_t search(uint64_t addresses[], uint8_t total);
+		bool read(uint8_t &data, uint8_t len = 8);
+		bool write(const uint8_t data, uint8_t len = 8);
 };
