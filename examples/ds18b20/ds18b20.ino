@@ -1,3 +1,5 @@
+// https://github.com/htmltiger/esp32-ds18b20
+
 #include "OneWireESP32.h"
 const uint8_t MaxDevs = 2;
 
