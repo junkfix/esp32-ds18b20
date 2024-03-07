@@ -9,3 +9,6 @@ Using the ESP32's RMT peripheral, results in very accurate read/write timeslots 
 The example is provided and tested using Arduino 2.0.6 based on ESP-IDF 4.4.3
 
 _1-Wire(R) is a trademark of Maxim Integrated Products, Inc._
+---
+
+<a href="https://www.buymeacoffee.com/htmltiger"><img src="https://www.buymeacoffee.com/assets/img/custom_images/white_img.png" alt="Buy Me A Coffee"></a>
