@@ -55,11 +55,18 @@ OneWire32::OneWire32(uint8_t pin, uint8_t tx, uint8_t rx, uint8_t parasite){
 					drvrx = 1;
 					rmt_set_source_clk(owrx, RMT_BASECLK_APB);
 					rmt_get_ringbuf_handle(owrx, &owbuf);
-					if(owpin < 32){
-						GPIO.enable_w1ts = (0x1 << owpin);
-					}else{
-						GPIO.enable1_w1ts.data = (0x1 << (owpin - 32));
-					}
+					#if !ESP32
+						#error ESP8266 not supported
+					#elif ESP32 == 4 || ESP32 == 5 || ESP32 == 6
+						//ESP32C3, ESP32C6, ESP32H2
+						GPIO.enable_w1ts.val = (0x1 << owpin);
+					#else
+						if(owpin < 32){
+							GPIO.enable_w1ts = (0x1 << owpin);
+						}else{
+							GPIO.enable1_w1ts.data = (0x1 << (owpin - 32));
+						}
+					#endif
 					rmt_set_gpio(owrx, RMT_MODE_RX, owpin, false);
 					rmt_set_gpio(owtx, RMT_MODE_TX, owpin, false);
 					PIN_INPUT_ENABLE(GPIO_PIN_MUX_REG[owpin]);
