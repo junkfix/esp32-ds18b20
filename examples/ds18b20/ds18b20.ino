@@ -6,8 +6,7 @@ const uint8_t MaxDevs = 2;
 float currTemp[MaxDevs];
 
 void tempTask(void *pvParameters){
-	OneWire32 ds(13, 0, 1, 0); //gpio pin, tx, rx, parasite power
-	// There are 8 RMT channels (0-7) available on ESP32 for tx/rx
+	OneWire32 ds(13); //gpio pin
 	
 	uint64_t addr[MaxDevs];
 	
