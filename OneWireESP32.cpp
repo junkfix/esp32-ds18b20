@@ -249,8 +249,8 @@ uint8_t OneWire32::search(uint64_t addresses[], uint8_t total) {
 	uint8_t loop = 1;
 	if(!drvrx){return found;}
 	reset();
+	uint64_t addr = 0;
 	while(loop && found < total){
-		uint64_t addr = 0;
 		loop = 0;
 		last_src = last_dev;
 		if(!reset()){
