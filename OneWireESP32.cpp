@@ -1,5 +1,5 @@
 /*
-https://github.com/htmltiger/esp32-ds18b20
+https://github.com/junkfix/esp32-ds18b20
 
 Some of the code was taken from
 https://github.com/DavidAntliff/esp32-owb/blob/master/owb_rmt.c
