@@ -6,6 +6,10 @@ It is based on the ESP's RMT peripheral. Whilst originally designed as an IR tra
 
 Using the ESP32's RMT peripheral, results in very accurate read/write timeslots and more reliable operation.
 
+Version 1.0.7 is for Arduino 2.x based on ESP-IDF 4.x
+
+Version 2.0.x is For Arduino 3.0.0 based on ESP-IDF 5.x
+
 The example is provided and tested using Arduino 2.0.6 based on ESP-IDF 4.4.3
 
 _1-Wire(R) is a trademark of Maxim Integrated Products, Inc._
