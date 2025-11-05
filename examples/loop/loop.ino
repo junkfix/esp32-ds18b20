@@ -2,8 +2,8 @@
 
 #include "OneWireESP32.h"
 const uint8_t MaxDevs = 2;
-uint8_t tempErr[MaxDevs];
-uint8_t tempReady[MaxDevs];
+OneWire32::Result tempErr[MaxDevs];
+bool tempReady[MaxDevs];
 float currTemp[MaxDevs];
 uint64_t addr[MaxDevs];
 
@@ -28,7 +28,7 @@ void tempTask(void *pvParameters){
 		vTaskDelay(750 / portTICK_PERIOD_MS);
 		for(byte i = 0; i < MaxDevs; i++){
 			tempErr[i] = ds.getTemp(addr[i], currTemp[i]);
-			tempReady[i] = 1;
+			tempReady[i] = true;
 		}
 		vTaskDelay(3000 / portTICK_PERIOD_MS); //sleep for 3 sec
 	}
@@ -45,7 +45,7 @@ void loop() {
 
 	for(byte i = 0; i < MaxDevs; i++){
 		if(tempReady[i]){
-			tempReady[i] = 0;
+			tempReady[i] = false;
 			if(tempErr[i]){
 				const char *errt[] = {"", "CRC", "BAD","DC","DRV"};
 				Serial.print(i); Serial.print(": "); Serial.println(errt[tempErr[i]]);

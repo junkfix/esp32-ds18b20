@@ -27,7 +27,7 @@ void tempTask(void *pvParameters){
 		ds.request();
 		vTaskDelay(750 / portTICK_PERIOD_MS);
 		for(byte i = 0; i < MaxDevs; i++){
-			uint8_t err = ds.getTemp(addr[i], currTemp[i]);
+			OneWire32::Result err = ds.getTemp(addr[i], currTemp[i]);
 			if(err){
 				const char *errt[] = {"", "CRC", "BAD","DC","DRV"};
 				Serial.print(i); Serial.print(": "); Serial.println(errt[err]);
