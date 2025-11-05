@@ -12,16 +12,15 @@ https://github.com/junkfix/esp32-ds18b20
 #include "driver/rmt_rx.h"
 #include "sdkconfig.h"
 
-#if CONFIG_IDF_TARGET_ESP32 || CONFIG_IDF_TARGET_ESP32S2
-#define MAX_BLOCKS	64
-#else
-#define MAX_BLOCKS	48
-#endif
-
 IRAM_ATTR bool owrxdone(rmt_channel_handle_t ch, const rmt_rx_done_event_data_t *edata, void *udata);
 
 class OneWire32 {
 	private:
+#if CONFIG_IDF_TARGET_ESP32 || CONFIG_IDF_TARGET_ESP32S2
+        static constexpr int MAX_BLOCKS = 64;
+#else
+        static constexpr int MAX_BLOCKS = 48;
+#endif
 		gpio_num_t owpin;
 		rmt_channel_handle_t owtx;
 		rmt_channel_handle_t owrx;
