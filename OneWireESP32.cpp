@@ -21,6 +21,8 @@ https://github.com/junkfix/esp32-ds18b20
 #define OW_SLOT_RECOVERY	5
 #define OW_TIMEOUT	50
 
+static IRAM_ATTR bool owrxdone(rmt_channel_handle_t ch, const rmt_rx_done_event_data_t *edata, void *udata);
+
 
 static rmt_symbol_word_t ow_bit0 = {
 	.duration0 = OW_SLOT_START + OW_SLOT_BIT,
